@@ -1,0 +1,803 @@
+@import "tailwindcss";
+
+html, body, #root {
+  background-color: #05070c;
+  color: #f8fafc;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    /* IE and Edge */
+    -ms-overflow-style: none;
+    /* Firefox */
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Global scrollbar hide for mobile OS simulation */
+* {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+*::-webkit-scrollbar {
+  display: none;
+}
+
+/* Smooth color and theme transitions */
+.theme-transition {
+  transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 300ms cubic-bezier(0.4, 0, 0.2, 1),
+              color 300ms cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- OMK THEME & CONTRAST ENGINE --- */
+/* By overriding Tailwind's internal CSS variables dynamically, 
+   the entire OS and all internal apps adapt instantly with zero hardcoded drift! */
+
+/* =========================================================================
+   1. DARK OLED (Default)
+   ========================================================================= */
+[data-theme="dark-oled"] {
+  --color-slate-950: #05070c;
+  --color-slate-900: #0f1420;
+  --color-slate-800: #1e2638;
+  --color-slate-700: #334155;
+  --color-slate-500: #64748b;
+  --color-slate-400: #94a3b8;
+  --color-slate-300: #cbd5e1;
+  --color-slate-200: #e2e8f0;
+  --color-slate-100: #f8fafc;
+  
+  --color-emerald-950: #022c22;
+  --color-emerald-900: #064e3b;
+  --color-emerald-600: #059669;
+  --color-emerald-500: #10b981;
+  --color-emerald-400: #34d399;
+}
+
+[data-theme="dark-oled"][data-contrast="low"] {
+  --color-slate-950: #0b0f17;
+  --color-slate-900: #131926;
+  --color-slate-800: #1d2536;
+  --color-slate-700: #2b364c;
+  --color-slate-500: #64748b;
+  --color-slate-400: #8896ab;
+  --color-slate-300: #b0bfd4;
+  --color-slate-200: #cbd5e1;
+  --color-slate-100: #e2e8f0;
+}
+
+[data-theme="dark-oled"][data-contrast="high"] {
+  --color-slate-950: #000000;
+  --color-slate-900: #0c101a;
+  --color-slate-800: #334155;
+  --color-slate-700: #475569;
+  --color-slate-500: #94a3b8;
+  --color-slate-400: #cbd5e1;
+  --color-slate-300: #e2e8f0;
+  --color-slate-200: #f8fafc;
+  --color-slate-100: #ffffff;
+  --color-emerald-500: #34d399;
+}
+
+/* =========================================================================
+   2. WARM PAPER (Editorial Light)
+   ========================================================================= */
+[data-theme="warm-paper"] {
+  --color-slate-950: #f4f1ea;  /* Main Background */
+  --color-slate-900: #e8e3d8;  /* Cards / Panels */
+  --color-slate-800: #d6d0c4;  /* Borders */
+  --color-slate-700: #c2baa9;  /* Dividers / Darker Borders */
+  --color-slate-500: #8a8377;  /* Muted Text / Icons */
+  --color-slate-400: #5c564b;  /* Text Secondary */
+  --color-slate-300: #3f3a32;  /* Headings */
+  --color-slate-200: #292520;  /* High Contrast */
+  --color-slate-100: #1a1714;  /* Absolute Contrast Primary */
+  
+  --color-emerald-950: #faead6;
+  --color-emerald-900: #f5d0a9;
+  --color-emerald-600: #ea580c;
+  --color-emerald-500: #f97316; /* Bright Terracotta Orange */
+  --color-emerald-400: #fdba74;
+}
+
+[data-theme="warm-paper"][data-contrast="low"] {
+  --color-slate-950: #f7f5ef;
+  --color-slate-900: #ede9df;
+  --color-slate-800: #ded8cb;
+  --color-slate-700: #cec7b7;
+  --color-slate-500: #9c9588;
+  --color-slate-400: #736b5d;
+  --color-slate-300: #50483c;
+  --color-slate-200: #3a342b;
+  --color-slate-100: #24201b;
+}
+
+[data-theme="warm-paper"][data-contrast="high"] {
+  --color-slate-950: #fffdf9;
+  --color-slate-900: #e5dfd1;
+  --color-slate-800: #a89f8d; /* Sharply defined borders */
+  --color-slate-700: #8f8572;
+  --color-slate-500: #665d4f;
+  --color-slate-400: #3e382e;
+  --color-slate-300: #24201a;
+  --color-slate-200: #12100d;
+  --color-slate-100: #000000; /* Pure Ink Black */
+  --color-emerald-500: #c2410c;
+}
+
+/* =========================================================================
+   3. CYBERPUNK (Electric Neon)
+   ========================================================================= */
+[data-theme="cyberpunk"] {
+  --color-slate-950: #060608;
+  --color-slate-900: #121217;
+  --color-slate-800: #272732;
+  --color-slate-700: #424254;
+  --color-slate-500: #eab308;
+  --color-slate-400: #facc15;
+  --color-slate-300: #fef08a;
+  --color-slate-200: #fef9c3;
+  --color-slate-100: #ffffea;
+  
+  --color-emerald-950: #1c1917;
+  --color-emerald-900: #422006;
+  --color-emerald-600: #eab308;
+  --color-emerald-500: #facc15;
+  --color-emerald-400: #fde047;
+}
+
+[data-theme="cyberpunk"][data-contrast="low"] {
+  --color-slate-950: #0d0d12;
+  --color-slate-900: #181820;
+  --color-slate-800: #252530;
+  --color-slate-700: #3a3a4c;
+  --color-slate-500: #ca8a04;
+  --color-slate-400: #eab308;
+  --color-slate-300: #facc15;
+  --color-slate-200: #fef08a;
+  --color-slate-100: #fef9c3;
+}
+
+[data-theme="cyberpunk"][data-contrast="high"] {
+  --color-slate-950: #000000;
+  --color-slate-900: #0c0c10;
+  --color-slate-800: #facc15; /* Electric Neon Yellow Borders */
+  --color-slate-700: #fde047;
+  --color-slate-500: #facc15;
+  --color-slate-400: #fef08a;
+  --color-slate-300: #ffffff;
+  --color-slate-200: #ffffff;
+  --color-slate-100: #ffffff;
+  --color-emerald-500: #facc15;
+}
+
+/* =========================================================================
+   4. GLASSMORPHISM (Frosted Studio)
+   ========================================================================= */
+[data-theme="glassmorphism"] {
+  --color-slate-950: #090d16;
+  --color-slate-900: rgba(25, 36, 58, 0.65);
+  --color-slate-800: rgba(255, 255, 255, 0.14);
+  --color-slate-700: rgba(255, 255, 255, 0.25);
+  --color-slate-500: #94a3b8;
+  --color-slate-400: #cbd5e1;
+  --color-slate-300: #e2e8f0;
+  --color-slate-200: #f1f5f9;
+  --color-slate-100: #ffffff;
+  
+  --color-emerald-950: rgba(6, 78, 59, 0.4);
+  --color-emerald-900: rgba(6, 95, 70, 0.6);
+  --color-emerald-600: #0284c7;
+  --color-emerald-500: #38bdf8;
+  --color-emerald-400: #7dd3fc;
+}
+
+[data-theme="glassmorphism"][data-contrast="low"] {
+  --color-slate-950: #0e1422;
+  --color-slate-900: rgba(30, 41, 59, 0.45);
+  --color-slate-800: rgba(255, 255, 255, 0.08);
+  --color-slate-700: rgba(255, 255, 255, 0.16);
+  --color-slate-500: #64748b;
+  --color-slate-400: #94a3b8;
+  --color-slate-300: #cbd5e1;
+  --color-slate-200: #e2e8f0;
+  --color-slate-100: #f8fafc;
+}
+
+[data-theme="glassmorphism"][data-contrast="high"] {
+  --color-slate-950: #03050a;
+  --color-slate-900: rgba(15, 23, 42, 0.85);
+  --color-slate-800: rgba(255, 255, 255, 0.35);
+  --color-slate-700: rgba(255, 255, 255, 0.5);
+  --color-slate-500: #cbd5e1;
+  --color-slate-400: #e2e8f0;
+  --color-slate-300: #f8fafc;
+  --color-slate-200: #ffffff;
+  --color-slate-100: #ffffff;
+}
+
+/* =========================================================================
+   5. NEUMORPHISM (Soft Tactile 3D)
+   ========================================================================= */
+[data-theme="neumorphism"] {
+  --color-slate-950: #e0e5ec;  /* Main Background */
+  --color-slate-900: #e0e5ec;  /* Soft Cards */
+  --color-slate-800: #c8d0dc;  /* Borders & Shadows */
+  --color-slate-700: #b0bcd0;  /* Dividers */
+  --color-slate-500: #7b889b;  /* Secondary Text */
+  --color-slate-400: #556274;  /* Body Text */
+  --color-slate-300: #333f50;  /* Titles */
+  --color-slate-200: #1e2634;  /* High Contrast */
+  --color-slate-100: #0f141f;  /* Deep Navy Ink */
+  
+  --color-emerald-950: #d0f0ec;
+  --color-emerald-900: #a4e4dc;
+  --color-emerald-600: #028090;
+  --color-emerald-500: #00a896; /* Minty Teal */
+  --color-emerald-400: #02c39a;
+}
+
+[data-theme="neumorphism"][data-contrast="high"] {
+  --color-slate-950: #e6ebf2;
+  --color-slate-900: #dfe4eb;
+  --color-slate-800: #9aa8bc;
+  --color-slate-700: #7e8e9e;
+  --color-slate-400: #2c3644;
+  --color-slate-300: #1b222c;
+  --color-slate-100: #000000;
+  --color-emerald-500: #007a6c;
+}
+
+/* =========================================================================
+   6. BRUTALISM (Neo-Brutalism Stark)
+   ========================================================================= */
+[data-theme="brutalism"] {
+  --color-slate-950: #fffdf0;  /* Warm Light Yellow-White */
+  --color-slate-900: #ffffff;  /* Pure White Cards */
+  --color-slate-800: #000000;  /* Hard 2px Solid Black Borders */
+  --color-slate-700: #1a1a1a;  /* Thick Dividers */
+  --color-slate-500: #4a4a4a;  /* Secondary Text */
+  --color-slate-400: #222222;  /* Body Text */
+  --color-slate-300: #000000;  /* Headings */
+  --color-slate-200: #000000;  
+  --color-slate-100: #000000;  /* Stark Black */
+  
+  --color-emerald-950: #fff9b3;
+  --color-emerald-900: #fff366;
+  --color-emerald-600: #e62e24;
+  --color-emerald-500: #ff3b30; /* Bold Red Accent */
+  --color-emerald-400: #ffe600; /* High Voltage Yellow */
+}
+
+/* =========================================================================
+   7. AURORA UI (Cosmic Northern Lights)
+   ========================================================================= */
+[data-theme="aurora-ui"] {
+  --color-slate-950: #0a091e;  /* Deep Midnight Violet */
+  --color-slate-900: rgba(22, 18, 52, 0.75);
+  --color-slate-800: rgba(147, 51, 234, 0.25);
+  --color-slate-700: rgba(236, 72, 153, 0.3);
+  --color-slate-500: #a78bfa;
+  --color-slate-400: #c4b5fd;
+  --color-slate-300: #e9d5ff;
+  --color-slate-200: #f5f3ff;
+  --color-slate-100: #ffffff;
+  
+  --color-emerald-950: rgba(6, 78, 59, 0.5);
+  --color-emerald-900: rgba(13, 148, 136, 0.5);
+  --color-emerald-600: #06b6d4;
+  --color-emerald-500: #00f2fe; /* Cyber Teal Glow */
+  --color-emerald-400: #ff007f; /* Neon Magenta */
+}
+
+/* =========================================================================
+   8. EDITORIAL (Warm Minimal Serif)
+   ========================================================================= */
+[data-theme="editorial"] {
+  --color-slate-950: #f8f6f0;  /* Fine Linen */
+  --color-slate-900: #ede8df;  /* Soft Parchment */
+  --color-slate-800: #dcd4c6;  /* Delicate Borders */
+  --color-slate-700: #c9bfaf;  /* Dividers */
+  --color-slate-500: #7c7263;  /* Muted Text */
+  --color-slate-400: #524a3e;  /* Body */
+  --color-slate-300: #332d24;  /* Subtitles */
+  --color-slate-200: #201c16;  
+  --color-slate-100: #100e0b;  /* Deep Charcoal */
+  
+  --color-emerald-950: #e2ede7;
+  --color-emerald-900: #b7d6c6;
+  --color-emerald-600: #2d6a4f;
+  --color-emerald-500: #1b4332; /* Rich Forest Green */
+  --color-emerald-400: #40916c;
+}
+
+/* =========================================================================
+   9. LIQUID GLASS (Apple Vision Pro Material)
+   ========================================================================= */
+[data-theme="liquid-glass"] {
+  --color-slate-950: #030712;  /* Deep Spatial Dark */
+  --color-slate-900: rgba(17, 24, 39, 0.65);
+  --color-slate-800: rgba(255, 255, 255, 0.16);
+  --color-slate-700: rgba(255, 255, 255, 0.28);
+  --color-slate-500: #94a3b8;
+  --color-slate-400: #cbd5e1;
+  --color-slate-300: #e2e8f0;
+  --color-slate-200: #f8fafc;
+  --color-slate-100: #ffffff;
+  
+  --color-emerald-950: rgba(49, 46, 129, 0.5);
+  --color-emerald-900: rgba(67, 56, 202, 0.6);
+  --color-emerald-600: #6366f1;
+  --color-emerald-500: #38bdf8; /* Prismatic Cyan Glass */
+  --color-emerald-400: #818cf8;
+}
+
+/* =========================================================================
+   10. CLAYMORPHISM (Bubbly 3D Pastels)
+   ========================================================================= */
+[data-theme="claymorphism"] {
+  --color-slate-950: #f3f0f7;  /* Soft Lilac White */
+  --color-slate-900: #ffffff;  /* Pill Cards */
+  --color-slate-800: #ded4ec;  /* Soft Clay Borders */
+  --color-slate-700: #cabce0;  
+  --color-slate-500: #8b79a8;
+  --color-slate-400: #605179;
+  --color-slate-300: #3f3256;
+  --color-slate-200: #251c36;
+  --color-slate-100: #150f20;
+  
+  --color-emerald-950: #f3e8ff;
+  --color-emerald-900: #e9d5ff;
+  --color-emerald-600: #7c3aed;
+  --color-emerald-500: #8b5cf6; /* Soft Violet Clay */
+  --color-emerald-400: #a78bfa;
+}
+
+/* =========================================================================
+   11. TRUST & AUTHORITY (Swiss Navy & Gold)
+   ========================================================================= */
+[data-theme="trust-and-authority"] {
+  --color-slate-950: #0b132b;  /* Royal Deep Navy */
+  --color-slate-900: #1c2541;  /* Executive Cards */
+  --color-slate-800: #2c3859;  /* Platinum Borders */
+  --color-slate-700: #3a4b75;
+  --color-slate-500: #8d9bb8;
+  --color-slate-400: #b5c2de;
+  --color-slate-300: #dce4f5;
+  --color-slate-200: #f0f4fc;
+  --color-slate-100: #ffffff;
+  
+  --color-emerald-950: #3d2f0f;
+  --color-emerald-900: #6b521b;
+  --color-emerald-600: #b8912c;
+  --color-emerald-500: #d4af37; /* Luxury Royal Gold */
+  --color-emerald-400: #e5c568;
+}
+
+/* =========================================================================
+   12. VIBRANT BLOCK (Growth-Hacker Energetic)
+   ========================================================================= */
+[data-theme="vibrant-block"] {
+  --color-slate-950: #0f172a;  /* Electric Slate */
+  --color-slate-900: #1e293b;  /* Punchy Cards */
+  --color-slate-800: #334155;  /* Bold Block Outlines */
+  --color-slate-700: #475569;
+  --color-slate-500: #94a3b8;
+  --color-slate-400: #cbd5e1;
+  --color-slate-300: #e2e8f0;
+  --color-slate-200: #f8fafc;
+  --color-slate-100: #ffffff;
+  
+  --color-emerald-950: #1f300b;
+  --color-emerald-900: #3a5c13;
+  --color-emerald-600: #65a30d;
+  --color-emerald-500: #a3e635; /* Electric Lime */
+  --color-emerald-400: #fb7185; /* Sunset Coral */
+}
+
+/* =========================================================================
+   13. MATRIX HACKER (Green Phosphor Rain)
+   ========================================================================= */
+[data-theme="matrix-hacker"] {
+  --color-slate-950: #020702;  /* Pitch Terminal Black */
+  --color-slate-900: #061306;  /* Dark Green Matrix Panel */
+  --color-slate-800: #0e2a0e;  /* Phosphor Grid Lines */
+  --color-slate-700: #1a4d1a;
+  --color-slate-500: #10b981;
+  --color-slate-400: #34d399;
+  --color-slate-300: #6ee7b7;
+  --color-slate-200: #a7f3d0;
+  --color-slate-100: #ecfdf5;
+  
+  --color-emerald-950: #022c22;
+  --color-emerald-900: #064e3b;
+  --color-emerald-600: #059669;
+  --color-emerald-500: #00ff66; /* High-Output Phosphor Green */
+  --color-emerald-400: #34d399;
+}
+
+/* =========================================================================
+   14. SPACE NEBULA (Deep Cosmic Horizon)
+   ========================================================================= */
+[data-theme="space-nebula"] {
+  --color-slate-950: #070417;  /* Deep Stellar Black */
+  --color-slate-900: #130c30;  /* Nebula Dust Cards */
+  --color-slate-800: #261b58;  /* Starlight Borders */
+  --color-slate-700: #3f2f84;
+  --color-slate-500: #a855f7;
+  --color-slate-400: #c084fc;
+  --color-slate-300: #e9d5ff;
+  --color-slate-200: #f5f3ff;
+  --color-slate-100: #ffffff;
+  
+  --color-emerald-950: #4a044e;
+  --color-emerald-900: #701a75;
+  --color-emerald-600: #c026d3;
+  --color-emerald-500: #d946ef; /* Magenta Horizon */
+  --color-emerald-400: #38bdf8; /* Cyan Star */
+}
+
+/* =========================================================================
+   15. MIDNIGHT TOKYO (Rainy Neon Violet)
+   ========================================================================= */
+[data-theme="midnight-tokyo"] {
+  --color-slate-950: #0b0914;  /* Rainy Asphalt */
+  --color-slate-900: #161226;  /* Izakaya Neon Cards */
+  --color-slate-800: #2c224a;  /* Violet Borders */
+  --color-slate-700: #463772;
+  --color-slate-500: #9333ea;
+  --color-slate-400: #c084fc;
+  --color-slate-300: #e9d5ff;
+  --color-slate-200: #f5f3ff;
+  --color-slate-100: #ffffff;
+  
+  --color-emerald-950: #164e63;
+  --color-emerald-900: #155e75;
+  --color-emerald-600: #0891b2;
+  --color-emerald-500: #06b6d4; /* Tokyo Blue Laser */
+  --color-emerald-400: #a855f7; /* Shinjuku Purple */
+}
+
+/* =========================================================================
+   16. MINIMAL NORDIC (Snow White & Alpine Sky)
+   ========================================================================= */
+[data-theme="minimal-nordic"] {
+  --color-slate-950: #ffffff;  /* Pure Snow White */
+  --color-slate-900: #f8fafc;  /* Clean Surface */
+  --color-slate-800: #e2e8f0;  /* 1px Hairline Borders */
+  --color-slate-700: #cbd5e1;  /* Dividers */
+  --color-slate-500: #64748b;  /* Muted Text */
+  --color-slate-400: #475569;  /* Body */
+  --color-slate-300: #334155;  /* Headings */
+  --color-slate-200: #1e293b;  /* Strong Text */
+  --color-slate-100: #0f172a;  /* Slate 900 Primary */
+  
+  --color-emerald-950: #e0f2fe;
+  --color-emerald-900: #bae6fd;
+  --color-emerald-600: #0284c7;
+  --color-emerald-500: #0ea5e9; /* Alpine Sky Blue */
+  --color-emerald-400: #38bdf8;
+}
+
+/* =========================================================================
+   LOW POWER MODE THROTTLING & OPTIMIZATIONS
+   ========================================================================= */
+[data-low-power="true"] * {
+  transition-duration: 50ms !important;
+}
+
+[data-low-power="true"] .backdrop-blur-md,
+[data-low-power="true"] .backdrop-blur-lg,
+[data-low-power="true"] .backdrop-blur-xl,
+[data-low-power="true"] .backdrop-blur-2xl {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+[data-low-power="true"] .animate-pulse,
+[data-low-power="true"] .animate-spin,
+[data-low-power="true"] .animate-bounce {
+  animation: none !important;
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-1.5deg); }
+  50% { transform: rotate(1.5deg); }
+}
+
+.animate-wiggle {
+  animation: wiggle 0.28s ease-in-out infinite;
+}
+
+/* =========================================================================
+   =========================================================================
+   UI / UX PRO MAX — STRUCTURAL DESIGN PARADIGM ENGINE
+   Applies authentic design philosophies (shadows, borders, radii, typography,
+   tactile motions, and surface depth) across the entire OS and all apps!
+   =========================================================================
+   ========================================================================= */
+
+/* -------------------------------------------------------------------------
+   1. BRUTALISM DESIGN SYSTEM (Raw, Stark, Hard Shadows, Sharp Corners)
+   ------------------------------------------------------------------------- */
+[data-theme="brutalism"] {
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+}
+
+[data-theme="brutalism"] * {
+  border-radius: 0px !important;
+}
+
+[data-theme="brutalism"] .bg-slate-900,
+[data-theme="brutalism"] [class*="bg-slate-900"],
+[data-theme="brutalism"] .bg-slate-950\/60,
+[data-theme="brutalism"] .bg-slate-950\/40,
+[data-theme="brutalism"] .bg-slate-950\/80,
+[data-theme="brutalism"] .bg-slate-950\/70,
+[data-theme="brutalism"] .bg-slate-950 {
+  background-color: #ffffff !important;
+  border: 2.5px solid #000000 !important;
+  box-shadow: 4px 4px 0px #000000 !important;
+  color: #000000 !important;
+}
+
+[data-theme="brutalism"] button,
+[data-theme="brutalism"] .cursor-pointer {
+  border: 2px solid #000000 !important;
+  box-shadow: 3px 3px 0px #000000 !important;
+  transition: transform 0.06s ease, box-shadow 0.06s ease !important;
+  font-weight: 800 !important;
+}
+
+[data-theme="brutalism"] button:hover,
+[data-theme="brutalism"] .cursor-pointer:hover {
+  transform: translate(-1px, -1px) !important;
+  box-shadow: 4.5px 4.5px 0px #000000 !important;
+}
+
+[data-theme="brutalism"] button:active,
+[data-theme="brutalism"] .cursor-pointer:active {
+  transform: translate(2px, 2px) !important;
+  box-shadow: 1px 1px 0px #000000 !important;
+}
+
+[data-theme="brutalism"] input,
+[data-theme="brutalism"] textarea,
+[data-theme="brutalism"] select {
+  background-color: #ffffff !important;
+  border: 2.5px solid #000000 !important;
+  box-shadow: 3px 3px 0px #000000 !important;
+  color: #000000 !important;
+  font-weight: 700 !important;
+}
+
+[data-theme="brutalism"] h1,
+[data-theme="brutalism"] h2,
+[data-theme="brutalism"] h3,
+[data-theme="brutalism"] h4 {
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
+  letter-spacing: -0.03em !important;
+  color: #000000 !important;
+}
+
+[data-theme="brutalism"] [class*="bg-emerald"],
+[data-theme="brutalism"] [class*="text-emerald"] {
+  background-color: #ffe600 !important;
+  color: #000000 !important;
+  border: 2px solid #000000 !important;
+  font-weight: 900 !important;
+}
+
+/* -------------------------------------------------------------------------
+   2. NEUMORPHISM DESIGN SYSTEM (Soft UI, Embossed / Debossed Dual Shadows)
+   ------------------------------------------------------------------------- */
+[data-theme="neumorphism"] [class*="rounded-"],
+[data-theme="neumorphism"] button,
+[data-theme="neumorphism"] input {
+  border-radius: 20px !important;
+}
+
+[data-theme="neumorphism"] .bg-slate-900,
+[data-theme="neumorphism"] [class*="bg-slate-900"],
+[data-theme="neumorphism"] .bg-slate-950\/60,
+[data-theme="neumorphism"] .bg-slate-950\/40,
+[data-theme="neumorphism"] .bg-slate-950\/80 {
+  background: #e0e5ec !important;
+  border: 1px solid rgba(255, 255, 255, 0.7) !important;
+  box-shadow: 7px 7px 15px #bec5d0, -7px -7px 15px #ffffff !important;
+  color: #2c3644 !important;
+}
+
+[data-theme="neumorphism"] button,
+[data-theme="neumorphism"] .cursor-pointer {
+  background: #e0e5ec !important;
+  border: 1px solid rgba(255, 255, 255, 0.6) !important;
+  box-shadow: 5px 5px 12px #bec5d0, -5px -5px 12px #ffffff !important;
+  color: #2c3644 !important;
+  transition: box-shadow 0.15s ease, transform 0.15s ease !important;
+}
+
+[data-theme="neumorphism"] button:active,
+[data-theme="neumorphism"] .cursor-pointer:active,
+[data-theme="neumorphism"] input,
+[data-theme="neumorphism"] textarea,
+[data-theme="neumorphism"] select {
+  background: #e0e5ec !important;
+  border: none !important;
+  box-shadow: inset 4px 4px 8px #bec5d0, inset -4px -4px 8px #ffffff !important;
+  color: #1e2634 !important;
+}
+
+/* -------------------------------------------------------------------------
+   3. CLAYMORPHISM DESIGN SYSTEM (Chunky 3D Pastel & Inset/Outset Depth)
+   ------------------------------------------------------------------------- */
+[data-theme="claymorphism"] [class*="rounded-"],
+[data-theme="claymorphism"] button,
+[data-theme="claymorphism"] input {
+  border-radius: 26px !important;
+}
+
+[data-theme="claymorphism"] .bg-slate-900,
+[data-theme="claymorphism"] [class*="bg-slate-900"],
+[data-theme="claymorphism"] .bg-slate-950\/60,
+[data-theme="claymorphism"] .bg-slate-950\/40,
+[data-theme="claymorphism"] .bg-slate-950\/80 {
+  background: #ffffff !important;
+  border: 3px solid #e2d7f5 !important;
+  box-shadow: 8px 8px 18px rgba(139, 92, 246, 0.12), -4px -4px 12px rgba(255, 255, 255, 0.9), inset 2px 2px 5px rgba(255, 255, 255, 0.95), inset -2px -2px 5px rgba(139, 92, 246, 0.08) !important;
+  color: #251c36 !important;
+}
+
+[data-theme="claymorphism"] button,
+[data-theme="claymorphism"] .cursor-pointer {
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+[data-theme="claymorphism"] button:hover {
+  transform: translateY(-2px) scale(1.02) !important;
+}
+
+[data-theme="claymorphism"] button:active {
+  transform: scale(0.96) !important;
+}
+
+/* -------------------------------------------------------------------------
+   4. GLASSMORPHISM & LIQUID GLASS (Frosted Lensing & Translucency)
+   ------------------------------------------------------------------------- */
+[data-theme="glassmorphism"] .bg-slate-900,
+[data-theme="glassmorphism"] [class*="bg-slate-900"],
+[data-theme="glassmorphism"] .bg-slate-950\/60,
+[data-theme="liquid-glass"] .bg-slate-900,
+[data-theme="liquid-glass"] [class*="bg-slate-900"],
+[data-theme="liquid-glass"] .bg-slate-950\/60 {
+  background: rgba(15, 23, 42, 0.55) !important;
+  backdrop-filter: blur(20px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(190%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  box-shadow: 0 16px 40px 0 rgba(0, 0, 0, 0.5), inset 0 1px 0 0 rgba(255, 255, 255, 0.25) !important;
+}
+
+[data-theme="liquid-glass"] button:hover,
+[data-theme="liquid-glass"] .cursor-pointer:hover {
+  border-color: rgba(56, 189, 248, 0.6) !important;
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+}
+
+/* -------------------------------------------------------------------------
+   5. CYBERPUNK & RETRO-FUTURISM (Neon Glows, Tech Angular Lines)
+   ------------------------------------------------------------------------- */
+[data-theme="cyberpunk"] .bg-slate-900,
+[data-theme="cyberpunk"] [class*="bg-slate-900"],
+[data-theme="cyberpunk"] .bg-slate-950\/60 {
+  background: #0c0c12 !important;
+  border: 1.5px solid #facc15 !important;
+  box-shadow: 0 0 12px rgba(250, 204, 21, 0.25), inset 0 0 8px rgba(250, 204, 21, 0.05) !important;
+}
+
+[data-theme="cyberpunk"] h1,
+[data-theme="cyberpunk"] h2,
+[data-theme="cyberpunk"] h3,
+[data-theme="cyberpunk"] .font-mono {
+  text-shadow: 0 0 8px rgba(250, 204, 21, 0.5) !important;
+}
+
+/* -------------------------------------------------------------------------
+   6. MATRIX HACKER (Terminal Monospace & Phosphor Rain Glow)
+   ------------------------------------------------------------------------- */
+[data-theme="matrix-hacker"] * {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+}
+
+[data-theme="matrix-hacker"] .bg-slate-900,
+[data-theme="matrix-hacker"] [class*="bg-slate-900"],
+[data-theme="matrix-hacker"] .bg-slate-950\/60 {
+  background: #030e05 !important;
+  border: 1.5px solid #00ff66 !important;
+  box-shadow: 0 0 12px rgba(0, 255, 102, 0.25), inset 0 0 8px rgba(0, 255, 102, 0.06) !important;
+}
+
+[data-theme="matrix-hacker"] h1,
+[data-theme="matrix-hacker"] h2,
+[data-theme="matrix-hacker"] h3,
+[data-theme="matrix-hacker"] span,
+[data-theme="matrix-hacker"] p {
+  text-shadow: 0 0 5px rgba(0, 255, 102, 0.6) !important;
+}
+
+/* -------------------------------------------------------------------------
+   7. WARM PAPER & EDITORIAL (Parchment & Classic Serif Print Typography)
+   ------------------------------------------------------------------------- */
+[data-theme="editorial"] h1,
+[data-theme="editorial"] h2,
+[data-theme="editorial"] h3,
+[data-theme="warm-paper"] h1,
+[data-theme="warm-paper"] h2,
+[data-theme="warm-paper"] h3 {
+  font-family: Georgia, 'Times New Roman', Times, serif !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em !important;
+}
+
+[data-theme="editorial"] .bg-slate-900,
+[data-theme="editorial"] [class*="bg-slate-900"],
+[data-theme="warm-paper"] .bg-slate-900,
+[data-theme="warm-paper"] [class*="bg-slate-900"] {
+  border: 1px solid #dcd4c6 !important;
+  box-shadow: 0 4px 16px rgba(32, 28, 22, 0.06) !important;
+}
+
+/* -------------------------------------------------------------------------
+   8. TRUST & AUTHORITY (Royal Navy & Gold Prestige Elevation)
+   ------------------------------------------------------------------------- */
+[data-theme="trust-and-authority"] .bg-slate-900,
+[data-theme="trust-and-authority"] [class*="bg-slate-900"] {
+  background: #162038 !important;
+  border: 1.5px solid #d4af37 !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
+}
+
+[data-theme="trust-and-authority"] h1,
+[data-theme="trust-and-authority"] h2,
+[data-theme="trust-and-authority"] h3 {
+  letter-spacing: 0.04em !important;
+}
+
+/* -------------------------------------------------------------------------
+   9. VIBRANT BLOCK (Growth-Hacker High Energy Solids)
+   ------------------------------------------------------------------------- */
+[data-theme="vibrant-block"] .bg-slate-900,
+[data-theme="vibrant-block"] [class*="bg-slate-900"] {
+  background: #1e293b !important;
+  border: 2px solid #334155 !important;
+  box-shadow: 4px 4px 0px #0f172a !important;
+}
+
+[data-theme="vibrant-block"] button:hover {
+  transform: translate(-2px, -2px) !important;
+  box-shadow: 6px 6px 0px #0f172a !important;
+}
+
+/* -------------------------------------------------------------------------
+   10. MINIMAL NORDIC (Snow White Pure & Hairline Slate Precision)
+   ------------------------------------------------------------------------- */
+[data-theme="minimal-nordic"] .bg-slate-900,
+[data-theme="minimal-nordic"] [class*="bg-slate-900"] {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04) !important;
+}
+
+
+
